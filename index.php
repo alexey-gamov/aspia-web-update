@@ -29,7 +29,7 @@ if (file_exists('install.php') and empty(Config::$admin_user))
 
 if (isset($_SESSION['admin']) and $_SESSION['admin'] === true)
 {
-	$mysqli = new mysqli(Config::$db_host, Config::$db_user, Config::$db_password, Config::$db_name);
+	$mysqli = new mysqli(Config::$db_host, Config::$db_user, Config::$db_pass, Config::$db_name);
 	$mysqli->set_charset('utf8');
 
 	if ($mysqli->connect_error)

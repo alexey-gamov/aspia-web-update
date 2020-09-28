@@ -26,7 +26,7 @@ class Config
     // Data to connect to MySQL server
     public static $db_host = '';
     public static $db_user = '';
-    public static $db_password = '';
+    public static $db_pass = '';
     public static $db_name = '';
 
     // Admin auth credits

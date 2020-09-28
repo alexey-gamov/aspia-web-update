@@ -46,7 +46,7 @@ $control = null;
 
 if ($_POST)
 {
-	$mysqli = new mysqli($_POST['db_host'], $_POST['db_user'], $_POST['db_password'], $_POST['db_name']);
+	$mysqli = new mysqli($_POST['db_host'], $_POST['db_user'], $_POST['db_pass'], $_POST['db_name']);
 
 	if ($mysqli->connect_error)
 	{
@@ -128,7 +128,7 @@ echo '<!DOCTYPE html>
 						<div class="control-group ' . $control . '">
 							<label class="control-label">Пароль:</label>
 							<div class="controls">
-								<input name="db_password" type="text" class="input-xlarge" value="' . (isset($_POST['db_password']) ? $_POST['db_password'] : null) . '" required/>
+								<input name="db_pass" type="text" class="input-xlarge" value="' . (isset($_POST['db_pass']) ? $_POST['db_pass'] : null) . '" required/>
 							</div>
 						</div>
 

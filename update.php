@@ -81,7 +81,7 @@ if (empty($query['package']) or empty($query['version']))
 else
 {
 	// Connect to the database.
-	$mysqli = new mysqli(Config::$db_host, Config::$db_user, Config::$db_password, Config::$db_name);
+	$mysqli = new mysqli(Config::$db_host, Config::$db_user, Config::$db_pass, Config::$db_name);
 	$mysqli->set_charset('utf8');
 
 	if (mysqli_connect_errno()) die('Could not connect to database: ' . $mysqli->connect_error);
