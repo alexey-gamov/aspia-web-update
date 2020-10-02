@@ -84,7 +84,7 @@ if ($_POST)
 		if (filter_var($_POST['install'], FILTER_VALIDATE_BOOLEAN) == true) unlink('install.php');
 		else rename("install.php", "install.later.php");
 	
-		header("location: " . dirname($_SERVER['SCRIPT_NAME']));
+		header("location: " . dirname($_SERVER['REQUEST_URI']));
 	}
 }
 

@@ -60,18 +60,18 @@ if (isset($_SESSION['admin']) and $_SESSION['admin'] === true)
 		if(!empty($_POST))
 		{
 			$mysqli->query("INSERT INTO `updates` VALUES (0, '" . $_POST['package_id'] . "', '" . $_POST['source_version'] . "', '" . $_POST['target_version'] . "', '" . nl2br($_POST['description']) . "', '" . $_POST['url'] . "');");
-			header("location: " . dirname($_SERVER['SCRIPT_NAME']));
+			header("location: " . dirname($_SERVER['REQUEST_URI']));
 		}
 	}
 	elseif (!empty($_GET['edit']))
 	{
 		$mysqli->query("UPDATE `updates` SET `package_id` = '" . $_POST['package_id'] . "',  `source_version` = '" . $_POST['source_version'] . "', `target_version` = '" . $_POST['target_version'] . "', `description` = '" . nl2br($_POST['description']) . "',  `url` = '" . $_POST['url'] . "' WHERE id='".intval($_GET['edit'])."'");
-		header("location: " . dirname($_SERVER['SCRIPT_NAME']));
+		header("location: " . dirname($_SERVER['REQUEST_URI']));
 	}
 	elseif (!empty($_GET['delete']))
 	{
 		$mysqli->query("DELETE FROM `updates` WHERE id='" . intval($_GET['delete']) . "'");
-		header("location: " . dirname($_SERVER['SCRIPT_NAME']));
+		header("location: " . dirname($_SERVER['REQUEST_URI']));
 	}
 	elseif (isset($_GET['settings']))
 	{
@@ -94,7 +94,7 @@ if (isset($_SESSION['admin']) and $_SESSION['admin'] === true)
 
 		$all->close();
 
-		header("location: " . dirname($_SERVER['SCRIPT_NAME']));
+		header("location: " . dirname($_SERVER['REQUEST_URI']));
 
 		if ($_POST['password'] === $_POST['confirm'] and $_POST['password'] <> null)
 		{
@@ -108,13 +108,13 @@ if (isset($_SESSION['admin']) and $_SESSION['admin'] === true)
 
 			$file = file_put_contents('config.php', $file);
 
-			header("location: " . dirname($_SERVER['SCRIPT_NAME']) . "?logout");
+			header("location: " . dirname($_SERVER['REQUEST_URI']) . "?logout");
 		}
 	}
 	elseif (isset($_GET['logout']))
 	{
 		unset($_SESSION['admin']);
-		header("location: " . dirname($_SERVER['SCRIPT_NAME']));
+		header("location: " . dirname($_SERVER['REQUEST_URI']));
 	}
 	
 	$navigation = '<a href="#settings" data-toggle="modal">настройки</a></li> <li><a href="?logout">выйти</a>';
@@ -280,7 +280,7 @@ else
 			if ($_POST['login'] == Config::$admin_user and $_POST['password'] == Config::$admin_pass)
 			{
 				$_SESSION['admin'] = true;
-				header("location: " . dirname($_SERVER['SCRIPT_NAME']));
+				header("location: " . $_SERVER['REQUEST_URI']);
 			}
 			else
 			{
