@@ -2,7 +2,7 @@
 
 //
 // Aspia Project
-// Copyright (C) 2018 Dmitry Chapyshev <dmitry@aspia.ru>
+// Copyright (C) 2020 Dmitry Chapyshev <dmitry@aspia.ru>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ if ($_POST)
 				$description =  $mysqli->connect_error;
 		}
 
-		$control = 'error';
+		$control = 'is-invalid';
 		$status = '<div class="alert alert-danger"><b>Ошибка!</b> ' . $description . ', проверьте вводимые данные</div>';
 	}
 	else
@@ -81,108 +81,93 @@ if ($_POST)
 		$mysqli->multi_query($sql);
 		$mysqli->close();
 
-		if (filter_var($_POST['install'], FILTER_VALIDATE_BOOLEAN) == true) unlink('install.php');
+		if (filter_var($_POST['install'], FILTER_VALIDATE_BOOLEAN) == true) array_map('unlink', glob("install*.php"));
 		else rename("install.php", "install.later.php");
-	
+
 		header("location: " . dirname($_SERVER['REQUEST_URI']));
 	}
 }
 
 echo '<!DOCTYPE html>
-<html>
+<html lang="ru">
 	<head>
 		<meta charset="utf-8">
-		<title>Центр обновлений &sdot; Install</title>
+		<title>Центр обновлений · Install</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="theme/style.min.css" rel="stylesheet">
+		<link href="theme/bootstrap.css" rel="stylesheet">
+		<link href="theme/style.css" rel="stylesheet">
+		<link href="theme/favicon.ico" rel="shortcut icon">
 	</head>
-	<body>
-		<div class="container">
-			<div class="navbar">
-				<div class="navbar-inner">
-					<div class="container">
-						<a class="brand" href=".">Центр обновлений</a>
-					</div>
+
+	<body class="container">
+		<nav class="navbar navbar-expand navbar-dark rounded shadow user-select-none">
+			<a class="navbar-brand" href=".">Центр обновлений</a>
+			<div class="collapse navbar-collapse">
+				<div class="navbar-nav ml-auto">
+					<a class="nav-link" href="https://aspia.org" target="_blank">aspia.org</a>
 				</div>
 			</div>
-
-			<form id="edit-settings" class="form-horizontal" action="install.php" method="post">
-			<fieldset>
-				' . $status . '
+		</nav>
+		<main>
+			' . $status . '
+			<form action="' . ltrim($_SERVER['REQUEST_URI'], '/') . '" method="post">
 				<div class="row">
-					<div class="span6 ">
-						<div class="control-group ' . $control . '">
-							<label class="control-label">Сервер:</label>
-							<div class="controls">
-								<input name="db_host" type="text" class="input-xlarge" value="' . (isset($_POST['db_host']) ? $_POST['db_host'] : null) . '" required/>
+					<div class="col-md-4">
+						<h4>Подключение к БД</h4>
+						<div class="row">
+							<label class="col-sm-3 col-form-label">Сервер:</label>
+							<div class="col-sm">
+								<input class="form-control ' . $control . '" type="text" name="db_host" value="' . (isset($_POST['db_host']) ? $_POST['db_host'] : null) . '" required/>
 							</div>
 						</div>
-
-						<div class="control-group ' . $control . '">
-							<label class="control-label">Пользователь:</label>
-							<div class="controls">
-								<input name="db_user" type="text" class="input-xlarge" value="' . (isset($_POST['db_user']) ? $_POST['db_user'] : null) . '" required/>
+						<div class="row">
+							<label class="col-sm-3 col-form-label">Пользователь:</label>
+							<div class="col-sm">
+								<input class="form-control ' . $control . '" type="text" name="db_user" value="' . (isset($_POST['db_user']) ? $_POST['db_user'] : null) . '" required/>
 							</div>
 						</div>
-
-						<div class="control-group ' . $control . '">
-							<label class="control-label">Пароль:</label>
-							<div class="controls">
-								<input name="db_pass" type="text" class="input-xlarge" value="' . (isset($_POST['db_pass']) ? $_POST['db_pass'] : null) . '" required/>
+						<div class="row">
+							<label class="col-sm-3 col-form-label">Пароль:</label>
+							<div class="col-sm">
+								<input class="form-control ' . $control . '" type="text" name="db_pass" value="' . (isset($_POST['db_pass']) ? $_POST['db_pass'] : null) . '" required/>
 							</div>
 						</div>
-
-						<div class="control-group ' . $control . '">
-							<label class="control-label">Базы данных:</label>
-							<div class="controls">
-								<input name="db_name" type="text" class="input-xlarge" value="' . (isset($_POST['db_name']) ? $_POST['db_name'] : null) . '" required/>
+						<div class="row">
+							<label class="col-sm-3 col-form-label">База данных:</label>
+							<div class="col-sm">
+								<input class="form-control ' . $control . '" type="text" name="db_name" value="' . (isset($_POST['db_name']) ? $_POST['db_name'] : null) . '" required/>
 							</div>
 						</div>
 					</div>
-
-					<div class="span6">
-						<div class="control-group info">
-							<label class="control-label">Логин:</label>
-							<div class="controls">
-								<input name="admin_user" type="text" class="input-xlarge" value="' . (isset($_POST['admin_user']) ? $_POST['admin_user'] : null) . '" required />
+					<div class="col-md-4 offset-md-1 mb-3">
+						<h4>Настройки администратора</h4>
+						<div class="row">
+							<label class="col-sm-2 col-form-label">Логин:</label>
+							<div class="col-sm">
+								<input class="form-control" type="text" name="admin_user" value="' . (isset($_POST['admin_user']) ? $_POST['admin_user'] : null) . '" required />
 							</div>
 						</div>
-
-						<div class="control-group">
-							<label class="control-label">Пароль:</label>
-							<div class="controls">
-								<input name="admin_pass" type="text" class="input-xlarge" value="' . (isset($_POST['admin_pass']) ? $_POST['admin_pass'] : null) . '" required/>
+						<div class="row">
+							<label class="col-sm-2 col-form-label">Пароль:</label>
+							<div class="col-sm">
+								<input class="form-control" type="text" name="admin_pass" value="' . (isset($_POST['admin_pass']) ? $_POST['admin_pass'] : null) . '" required/>
 							</div>
 						</div>
-						
-						<div class="control-group" style="margin-top: 30px">
-							<label class="control-label">Файл:</label>
-							<div class="controls">
-								<label class="radio">
-									<input type="radio" name="install" value="1" checked>
-									<span class="label tag3">Удалить установочный файл</span>
-								</label>
-								<label class="radio">
-									<input type="radio" name="install" value="0">
-									<span class="label tag6">Оставить, но переименовать</span>
-								</label>
-							</div>
-						</div>		
-
+						<h4 class="mt-4">Дополнительно</h4>
+						<div class="form-check form-switch">
+							<input class="form-check-input" type="checkbox" name="install" value="1" id="switch" ' . (isset($_POST['install']) ? 'checked' : null) . '>
+							<label class="form-check-label" for="switch">Удалить установочный файл после завершения</label>
+						</div>
 					</div>
 				</div>
 
-				<div class="form-actions">
-					<button type="submit" id="apply" class="btn btn-inverse">Установить</button>
-					<button type="reset" class="btn">Отмена</button>
-				</div>
-			<fieldset>
+				<button class="btn btn-dark" type="submit" id="apply">Установить</button>
+				<button class="btn btn-light" type="reset">Отчистить</button>
 			</form>
-		</div>
-
-		<script src="theme/jquery.min.js"></script>
-		<script src="theme/script.min.js"></script>
+		</main>
 	</body>
+
+	<script src="theme/bootstrap.min.js"></script>
 </html>';
 
 ?>

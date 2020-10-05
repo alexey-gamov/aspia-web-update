@@ -1,6 +1,6 @@
 # Центр обновлений Aspia
 
-![upd-center](https://i.postimg.cc/xdYqFK0d/2020-09-28-11-08-19.png)
+![upd-center](https://i.postimg.cc/rscdbcRs/aspia-upd-center.png)
 
 ## Описание
 
@@ -8,4 +8,4 @@
 
 ## Лицензия
 
-Проект распростространяется под лицензией [GNU General Public License 3](LICENSE.md).
+Проект распростространяется под лицензией [GNU General Public License 3](LICENSE).
