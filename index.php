@@ -162,7 +162,7 @@ if (isset($_SESSION['admin']) and $_SESSION['admin'] === true)
 	{
 		$select .= '<option value="' . $options['id'] . '">' . $options['name'] . '</option>';
 
-		$types .= '<div class="input-group mb-3" id="item-' . $items . '">';
+		$types .= '<div class="input-group" id="item-' . $items . '">';
 		$types .= '<input class="form-control" type="text" name="package[]" value="' . $options['name'] . '" readonly>';
 		$types .= '<a href="#" onclick="remove(' . $items . ')" class="input-group-text"><i class="icon icon-trash"></i></a>';
 		$types .= '</div>';
@@ -241,7 +241,7 @@ if (isset($_SESSION['admin']) and $_SESSION['admin'] === true)
 							<div class="tab-content">
 								<div class="tab-pane fade show active" id="items">
 									' . $types . '
-									<button class="btn btn-sm btn-primary mb-3" type="button" onclick="add()">Добавить ещё пакет</button>
+									<button class="btn btn-sm btn-primary" type="button" onclick="add()">Добавить ещё пакет</button>
 									<input name="count" type="hidden" value="' . $items . '">
 								</div>
 								<div class="tab-pane fade" id="auth">
@@ -265,7 +265,7 @@ else
 
 	$error = null;
 	
-	$form = '<form class="row g-3" method="post">
+	$form = '<form class="row" method="post">
 				<div class="col-auto">
 					<input class="form-control" type="text" name="login" maxlength="15" placeholder="Логин">
 				</div>
@@ -308,8 +308,7 @@ echo '<!DOCTYPE html>
 		<meta charset="utf-8">
 		<title>Центр обновлений · Aspia</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="theme/bootstrap.css" rel="stylesheet">
-		<link href="theme/style.css" rel="stylesheet">
+		<link href="theme/style.min.css" rel="stylesheet">
 		<link href="theme/favicon.ico" rel="shortcut icon">
 	</head>
 
@@ -317,7 +316,7 @@ echo '<!DOCTYPE html>
 		<nav class="navbar navbar-expand navbar-dark rounded shadow user-select-none">
 			<a class="navbar-brand" href=".">Центр обновлений</a>
 			<div class="collapse navbar-collapse">
-				<div class="navbar-nav ml-auto">
+				<div class="navbar-nav">
 					' . $navigation . '
 				</div>
 			</div>

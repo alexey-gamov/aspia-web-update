@@ -94,8 +94,7 @@ echo '<!DOCTYPE html>
 		<meta charset="utf-8">
 		<title>Центр обновлений · Install</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="theme/bootstrap.css" rel="stylesheet">
-		<link href="theme/style.css" rel="stylesheet">
+		<link href="theme/style.min.css" rel="stylesheet">
 		<link href="theme/favicon.ico" rel="shortcut icon">
 	</head>
 
@@ -103,7 +102,7 @@ echo '<!DOCTYPE html>
 		<nav class="navbar navbar-expand navbar-dark rounded shadow user-select-none">
 			<a class="navbar-brand" href=".">Центр обновлений</a>
 			<div class="collapse navbar-collapse">
-				<div class="navbar-nav ml-auto">
+				<div class="navbar-nav">
 					<a class="nav-link" href="https://aspia.org" target="_blank">aspia.org</a>
 				</div>
 			</div>
@@ -139,7 +138,7 @@ echo '<!DOCTYPE html>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-4 offset-md-1 mb-3">
+					<div class="col-md-4 offset-md-1">
 						<h4>Настройки администратора</h4>
 						<div class="row">
 							<label class="col-sm-2 col-form-label">Логин:</label>
@@ -153,7 +152,7 @@ echo '<!DOCTYPE html>
 								<input class="form-control" type="text" name="admin_pass" value="' . (isset($_POST['admin_pass']) ? $_POST['admin_pass'] : null) . '" required/>
 							</div>
 						</div>
-						<h4 class="mt-4">Дополнительно</h4>
+						<h4 style="margin-top: 1.5rem">Дополнительно</h4>
 						<div class="form-check form-switch">
 							<input class="form-check-input" type="checkbox" name="install" value="1" id="switch" ' . (isset($_POST['install']) ? 'checked' : null) . '>
 							<label class="form-check-label" for="switch">Удалить установочный файл после завершения</label>
