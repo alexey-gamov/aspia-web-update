@@ -42,6 +42,13 @@ function getPackageId($mysqli, $package)
 
 function getUpdates($mysqli, $package_id, $version)
 {
+    $pieces = explode(".", $version);
+
+    // We only support 3 groups of digits in the version number.
+    while (count($pieces) > 3) array_pop($pieces);
+
+    $version = implode(".", $pieces);
+
     $sql = "SELECT target_version, description, url
             FROM updates
             WHERE package_id = '$package_id' AND source_version = '$version'";
@@ -71,28 +78,31 @@ function getUpdates($mysqli, $package_id, $version)
     $result->close();
 }
 
-// Run the update check.
-parse_str($_SERVER['QUERY_STRING'], $query);
+function doWork()
+{
+    parse_str($_SERVER["QUERY_STRING"], $query);
 
-if (empty($query['package']) or empty($query['version']))
-{
-	die('Invalid request received');
-}
-else
-{
-	// Connect to the database.
-	$mysqli = new mysqli(Config::$db_host, Config::$db_user, Config::$db_pass, Config::$db_name);
+    // Connect to the database.
+    $mysqli = new mysqli(Config::$db_host, Config::$db_user, Config::$db_pass, Config::$db_name);
 	$mysqli->set_charset('utf8');
 
 	if (mysqli_connect_errno()) die('Could not connect to database: ' . $mysqli->connect_error);
 
-	// Get the package name and version from the query.
-	$package = $mysqli->real_escape_string($query['package']);
-	$version = $mysqli->real_escape_string($query['version']);
+    // Get the package name and version from the query.
+    $package = $mysqli->real_escape_string($query['package']);
+    $version = $mysqli->real_escape_string($query['version']);
+
+    if (empty($package) or empty($version))
+    {
+        die('Invalid request received.');
+    }
 
 	getUpdates($mysqli, getPackageId($mysqli, $package), $version);
 
 	$mysqli->close();
 }
+
+// Run the update check.
+doWork();
 
 ?>
