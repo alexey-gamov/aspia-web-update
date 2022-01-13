@@ -21,7 +21,7 @@
 class Config
 {
     // Update server version
-    public static $version = '1.0.1';
+    public static $version = '1.0.2';
 
     // Data to connect to MySQL server
     public static $db_host = '';
