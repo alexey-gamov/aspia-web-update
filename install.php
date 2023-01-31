@@ -29,7 +29,8 @@ CREATE TABLE `packages` (
 
 INSERT INTO `packages` (`id`, `name`) VALUES
 (1, 'console'),
-(2, 'host');
+(2, 'host'),
+(3, 'client');
 
 CREATE TABLE `updates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -109,7 +110,7 @@ echo '<!DOCTYPE html>
 		</nav>
 		<main>
 			' . $status . '
-			<form action="' . ltrim($_SERVER['REQUEST_URI'], '/') . '" method="post">
+			<form action="' . $_SERVER['REQUEST_URI'] . '" method="post">
 				<div class="row">
 					<div class="col-md-4">
 						<h4>Подключение к БД</h4>
